@@ -13,6 +13,14 @@ namespace System.Net.Quic
         Write = 2,
         Both = 3,
     }
+    [System.FlagsAttribute]
+    public enum SendDatagramOptions
+    {
+        None = 0,
+        Allow0Rtt = 1,
+        DatagramPriority = 8,
+        CancelOnBlocked = 64
+    }
     public sealed partial class QuicClientConnectionOptions : System.Net.Quic.QuicConnectionOptions
     {
         public QuicClientConnectionOptions() { }
@@ -23,6 +31,7 @@ namespace System.Net.Quic
     public sealed partial class QuicConnection : System.IAsyncDisposable
     {
         internal QuicConnection() { }
+        public event System.EventHandler<System.Net.Quic.DatagramReceivedEventArgs>? DatagramReceived { add { } remove { } }
         [Runtime.Versioning.SupportedOSPlatformGuard("windows")]
         [Runtime.Versioning.SupportedOSPlatformGuard("linux")]
         [Runtime.Versioning.SupportedOSPlatformGuard("osx")]
@@ -40,6 +49,10 @@ namespace System.Net.Quic
         public static System.Threading.Tasks.ValueTask<System.Net.Quic.QuicConnection> ConnectAsync(System.Net.Quic.QuicClientConnectionOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
         public System.Threading.Tasks.ValueTask<System.Net.Quic.QuicStream> OpenOutboundStreamAsync(System.Net.Quic.QuicStreamType type, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public void SendDatagram(byte[] buffer, int offset, int count) { throw null; }
+        public void SendDatagram(byte[] buffer, int offset, int count, SendDatagramOptions options) { throw null; }
+        public void SendDatagram(ReadOnlyMemory<byte> buffer) { throw null; }
+        public void SendDatagram(ReadOnlyMemory<byte> buffer, SendDatagramOptions options) { throw null; }
         public override string ToString() { throw null; }
     }
     public abstract partial class QuicConnectionOptions
@@ -162,5 +175,9 @@ namespace System.Net.Quic
     {
         Unidirectional = 0,
         Bidirectional = 1,
+    }
+    public sealed partial class DatagramReceivedEventArgs : System.EventArgs
+    {
+        public required byte[] Buffer { get { throw null; } init { } }
     }
 }

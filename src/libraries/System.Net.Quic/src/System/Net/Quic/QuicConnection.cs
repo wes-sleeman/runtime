@@ -765,6 +765,7 @@ public sealed partial class QuicConnection : IAsyncDisposable
         => connectionEvent.Type switch
         {
             QUIC_CONNECTION_EVENT_TYPE.CONNECTED => HandleEventConnected(ref connectionEvent.CONNECTED),
+            QUIC_CONNECTION_EVENT_TYPE.DATAGRAM_RECEIVED => HandleDatagramReceived(ref connectionEvent.DATAGRAM_RECEIVED),
             QUIC_CONNECTION_EVENT_TYPE.SHUTDOWN_INITIATED_BY_TRANSPORT => HandleEventShutdownInitiatedByTransport(ref connectionEvent.SHUTDOWN_INITIATED_BY_TRANSPORT),
             QUIC_CONNECTION_EVENT_TYPE.SHUTDOWN_INITIATED_BY_PEER => HandleEventShutdownInitiatedByPeer(ref connectionEvent.SHUTDOWN_INITIATED_BY_PEER),
             QUIC_CONNECTION_EVENT_TYPE.SHUTDOWN_COMPLETE => HandleEventShutdownComplete(),
