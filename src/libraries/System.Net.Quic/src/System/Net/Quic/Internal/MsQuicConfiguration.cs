@@ -180,6 +180,8 @@ internal static partial class MsQuicConfiguration
                     : 0; // 0 disables the timeout
         }
 
+        settings.DatagramReceiveEnabled = 1;
+
         QUIC_ALLOWED_CIPHER_SUITE_FLAGS allowedCipherSuites = QUIC_ALLOWED_CIPHER_SUITE_FLAGS.NONE;
 
         if (cipherSuitesPolicy != null)
